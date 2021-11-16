@@ -8,6 +8,7 @@ namespace Project.Player.Scripts
         [SerializeField] private float speed = 15;
         [SerializeField] private float jumpForce = 10;
         [SerializeField] private Rigidbody2D  rigidBody;
+        [SerializeField] private Animator  animator;
 
         private bool isJumping = false;
         private bool canDoubleJump = true;
@@ -20,8 +21,25 @@ namespace Project.Player.Scripts
 
         private void Move()
         {
-            Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+            float horizontalMove = Input.GetAxis("Horizontal");
+            Vector3 movement = new Vector3(horizontalMove, 0f, 0f);
+            
             transform.position += movement * Time.deltaTime * speed;
+
+            if (horizontalMove > 0)
+            {
+                animator.SetBool("run", true);
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            }
+            if (horizontalMove < 0)
+            {
+                animator.SetBool("run", true);
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            }
+            if (horizontalMove == 0)
+            {
+                animator.SetBool("run", false);
+            }
         }
         
         private void VerifyJump()
@@ -34,11 +52,13 @@ namespace Project.Player.Scripts
                     {
                         Jump();
                         canDoubleJump = false;
+                        animator.SetBool("doubleJump", true);
                     }
                 }
                 else
                 {
                     Jump();
+                    animator.SetBool("jump", true);
                 }
             }
         }
@@ -54,6 +74,8 @@ namespace Project.Player.Scripts
             {
                 isJumping = false;
                 canDoubleJump = true;
+                animator.SetBool("jump", false);
+                animator.SetBool("doubleJump", false);
             }
         }
 
