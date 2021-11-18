@@ -2427,6 +2427,10 @@ PrefabInstance:
       propertyPath: cancelButton
       value: 
       objectReference: {fileID: 1055622105}
+    - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
+      propertyPath: availableCharactersPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2157805952333111487, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: m_Name
       value: LobbyController

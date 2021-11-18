@@ -126,7 +126,7 @@ namespace Project.Online.Scripts
         [PunRPC]
         private void RPC_CreatePlayer()
         {
-            PhotonNetwork.Instantiate(Path.Combine("Prefabs", "Player"), Vector3.zero, quaternion.identity);
+            PhotonNetwork.Instantiate("CyborgPlayer", Vector3.zero, quaternion.identity);
         }
 
         [PunRPC]

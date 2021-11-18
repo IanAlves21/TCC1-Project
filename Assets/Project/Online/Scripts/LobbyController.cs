@@ -10,13 +10,15 @@ namespace Project.Online.Scripts
     {
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject cancelButton;
+        [SerializeField] private GameObject[] availableCharactersPrefabs;
         [SerializeField] private int roomSize;
-
+        
         private LobbyController lobby;
         
         void Awake()
         {
             lobby = this;
+            LoadPrefabsToResourcesCash();
         }
 
         public void StartButtonClick()
@@ -48,6 +50,19 @@ namespace Project.Online.Scripts
                 MaxPlayers = (byte) MultiplayerSettings.Settings.maxPlayers
             };
             PhotonNetwork.CreateRoom("Room" + uniqueKeyId, roomOps);
+        }
+        
+        private void LoadPrefabsToResourcesCash()
+        {
+            DefaultPool poolPrefab = PhotonNetwork.PrefabPool as DefaultPool;
+            
+            if ((poolPrefab != null) && (availableCharactersPrefabs != null))
+            {
+                foreach(GameObject prefab in availableCharactersPrefabs)
+                {
+                    poolPrefab.ResourceCache.Add(prefab.name, prefab);
+                }
+            }
         }
 
         public override void OnConnectedToMaster()
