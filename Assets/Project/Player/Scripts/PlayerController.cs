@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Project.Player.Scripts
@@ -8,57 +9,68 @@ namespace Project.Player.Scripts
         [SerializeField] private float speed = 15;
         [SerializeField] private float jumpForce = 10;
         [SerializeField] private Rigidbody2D  rigidBody;
-        [SerializeField] private Animator  animator;
+        [SerializeField] private Animator animator;
+        [SerializeField] private PhotonView photonView;
 
         private bool isJumping = false;
         private bool canDoubleJump = true;
 
         void Update()
         {
-            Move();
-            VerifyJump();
+            if (photonView.IsMine)
+            {
+                photonView.RPC("Move", RpcTarget.All, gameObject.name, Time.deltaTime, Input.GetAxis("Horizontal"));
+                photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
+            }
         }
 
-        private void Move()
+        [PunRPC]
+        private void Move(string name, float deltaTime, float horizontalMove)
         {
-            float horizontalMove = Input.GetAxis("Horizontal");
-            Vector3 movement = new Vector3(horizontalMove, 0f, 0f);
-            
-            transform.position += movement * Time.deltaTime * speed;
+            if (gameObject.name == name)
+            {
+                Vector3 movement = new Vector3(horizontalMove, 0f, 0f);
+                
+                transform.position += movement * deltaTime * speed;
 
-            if (horizontalMove > 0)
-            {
-                animator.SetBool("run", true);
-                transform.eulerAngles = new Vector3(0f, 0f, 0f);
-            }
-            if (horizontalMove < 0)
-            {
-                animator.SetBool("run", true);
-                transform.eulerAngles = new Vector3(0f, 180f, 0f);
-            }
-            if (horizontalMove == 0)
-            {
-                animator.SetBool("run", false);
+                if (horizontalMove > 0)
+                {
+                    animator.SetBool("run", true);
+                    transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                }
+                if (horizontalMove < 0)
+                {
+                    animator.SetBool("run", true);
+                    transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                }
+                if (horizontalMove == 0)
+                {
+                    animator.SetBool("run", false);
+                }
             }
         }
         
-        private void VerifyJump()
+        [PunRPC]
+        private void VerifyJump(string name, bool buttonDownJump)
         {
-            if (Input.GetButtonDown("Jump"))
+            if (gameObject.name == name)
             {
-                if (isJumping)
+                if (buttonDownJump)
                 {
-                    if (canDoubleJump)
+                    if (isJumping)
+                    {
+                        if (canDoubleJump)
+                        {
+                            Jump();
+                            canDoubleJump = false;
+                            animator.SetBool("doubleJump", true);
+                        }
+                    }
+                    else
                     {
                         Jump();
-                        canDoubleJump = false;
-                        animator.SetBool("doubleJump", true);
+                        animator.SetBool("jump", true);
                     }
-                }
-                else
-                {
-                    Jump();
-                    animator.SetBool("jump", true);
                 }
             }
         }
@@ -84,6 +96,17 @@ namespace Project.Player.Scripts
             if (collision.collider.CompareTag("Ground"))
             {
                 isJumping = true;
+            }
+        }
+        
+        [PunRPC]
+        private void RPC_ApplyUniquePlayerName(string uniquePlayerNameKey, string playerName)
+        {
+            Debug.Log("aaaaaaaaaaaaaaaaaa" + gameObject.name);
+            if (playerName == gameObject.name)
+            {
+                Debug.Log("aqui ---------------------> " + uniquePlayerNameKey);
+                gameObject.name = uniquePlayerNameKey;
             }
         }
     }

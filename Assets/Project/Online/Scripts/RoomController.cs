@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Photon.Pun;
 using Photon.Realtime;
@@ -123,10 +124,18 @@ namespace Project.Online.Scripts
             }
         }
 
+        private string GenerateUniqueKey()
+        {
+            return DateTime.UtcNow.TimeOfDay.ToString().Replace(":", "");
+        }
+
         [PunRPC]
         private void RPC_CreatePlayer()
         {
-            PhotonNetwork.Instantiate("CyborgPlayer", Vector3.zero, quaternion.identity);
+            GameObject player = PhotonNetwork.Instantiate("CyborgPlayer", Vector3.zero, quaternion.identity);
+            string uniquePlayerNameKey = player.name + GenerateUniqueKey();
+
+            player.GetComponent<PhotonView>().RPC("RPC_ApplyUniquePlayerName", RpcTarget.All, uniquePlayerNameKey, player.name);
         }
 
         [PunRPC]
