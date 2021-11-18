@@ -13,6 +13,8 @@ namespace Project.Online.Scripts
         public static RoomController Room;
         private PhotonView photonView;
 
+        public string selectedCharacter;
+
         public bool isGameLoaded;
         public int currentScene;
 
@@ -132,7 +134,7 @@ namespace Project.Online.Scripts
         [PunRPC]
         private void RPC_CreatePlayer()
         {
-            GameObject player = PhotonNetwork.Instantiate("CyborgPlayer", Vector3.zero, quaternion.identity);
+            GameObject player = PhotonNetwork.Instantiate(RoomController.Room.selectedCharacter, Vector3.zero, quaternion.identity);
             string uniquePlayerNameKey = player.name + GenerateUniqueKey();
 
             player.GetComponent<PhotonView>().RPC("RPC_ApplyUniquePlayerName", RpcTarget.AllBuffered, uniquePlayerNameKey, player.name);
