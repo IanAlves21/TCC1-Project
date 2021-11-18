@@ -11,15 +11,12 @@ namespace Project.Online.Scripts
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject cancelButton;
         [SerializeField] private int roomSize;
-        
-        void Start()
-        {
-        
-        }
 
-        void Update()
-        {
+        private LobbyController lobby;
         
+        void Awake()
+        {
+            lobby = this;
         }
 
         public void StartButtonClick()
@@ -44,7 +41,12 @@ namespace Project.Online.Scripts
 
             int uniqueKeyId = (int) Time.time;
             Debug.Log(uniqueKeyId);
-            RoomOptions roomOps = new RoomOptions(){IsVisible = true, IsOpen = true, MaxPlayers = (byte) roomSize};
+            RoomOptions roomOps = new RoomOptions()
+            {
+                IsVisible = true, 
+                IsOpen = true, 
+                MaxPlayers = (byte) MultiplayerSettings.Settings.maxPlayers
+            };
             PhotonNetwork.CreateRoom("Room" + uniqueKeyId, roomOps);
         }
 
