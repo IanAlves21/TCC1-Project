@@ -135,7 +135,7 @@ namespace Project.Online.Scripts
             GameObject player = PhotonNetwork.Instantiate("CyborgPlayer", Vector3.zero, quaternion.identity);
             string uniquePlayerNameKey = player.name + GenerateUniqueKey();
 
-            player.GetComponent<PhotonView>().RPC("RPC_ApplyUniquePlayerName", RpcTarget.All, uniquePlayerNameKey, player.name);
+            player.GetComponent<PhotonView>().RPC("RPC_ApplyUniquePlayerName", RpcTarget.AllBuffered, uniquePlayerNameKey, player.name);
         }
 
         [PunRPC]
