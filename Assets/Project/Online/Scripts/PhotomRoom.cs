@@ -1,15 +1,17 @@
+using System;
 using System.IO;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace Project.Online.Scripts
 {
-    public class RoomController : MonoBehaviourPunCallbacks, IInRoomCallbacks
+    public class PhotomRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
-        public static RoomController Room;
+        public static PhotomRoom room;
         private PhotonView photonView;
 
         public bool isGameLoaded;
@@ -30,16 +32,16 @@ namespace Project.Online.Scripts
 
         private void Awake()
         {
-            if (RoomController.Room == null)
+            if (PhotomRoom.room == null)
             {
-                RoomController.Room = this;
+                PhotomRoom.room = this;
             }
             else
             {
-                if (RoomController.Room != this)
+                if (PhotomRoom.room != this)
                 {
-                    Destroy(RoomController.Room.gameObject);
-                    RoomController.Room = this;
+                    Destroy(PhotomRoom.room.gameObject);
+                    PhotomRoom.room = this;
                 }
             }
             DontDestroyOnLoad(this.gameObject);
