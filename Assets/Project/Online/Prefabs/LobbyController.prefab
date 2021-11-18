@@ -45,4 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startButton: {fileID: 0}
   cancelButton: {fileID: 0}
+  availableCharactersPrefabs:
+  - {fileID: 2152969822443377393, guid: fd9c6fad8fbef894883fafdab0d646dd, type: 3}
+  - {fileID: 210956274916245745, guid: f93b15a0fd92a9d4ea0fb42b9169524b, type: 3}
+  - {fileID: 6008576104586846635, guid: ccae8877ed2dd984ea7759963c6f9711, type: 3}
   roomSize: 0
