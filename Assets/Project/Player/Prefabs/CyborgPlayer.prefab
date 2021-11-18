@@ -155,6 +155,7 @@ MonoBehaviour:
   jumpForce: 10
   rigidBody: {fileID: 210956274916245751}
   animator: {fileID: 210956274916245707}
+  photonView: {fileID: 6060882998895540562}
 --- !u!95 &210956274916245707
 Animator:
   serializedVersion: 3
