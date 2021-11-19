@@ -23,9 +23,8 @@ namespace Project.Player.Scripts
             {
                 photonView.RPC("Move", RpcTarget.All, gameObject.name, Time.deltaTime, Input.GetAxis("Horizontal"));
                 photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
+                photonView.RPC("VerifyAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.C));
             }
-
-            VerifyAttack();
         }
 
         [PunRPC]
@@ -93,16 +92,20 @@ namespace Project.Player.Scripts
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
 
-        private void VerifyAttack()
+        [PunRPC]
+        private void VerifyAttack(string name, bool keyCode)
         {
-            if(Input.GetKeyDown(KeyCode.C))
+            if (name == gameObject.name)
             {
-                animator.SetTrigger("specialAttack");
+                if(keyCode)
+                {
+                    animator.SetTrigger("specialAttack");
 
-                Vector3 rotation = transform.eulerAngles.y != 0 ? new Vector3(0f, 0f, 0f) : new Vector3(0f, 180f, 0f);
+                    Vector3 rotation = transform.eulerAngles.y != 0 ? new Vector3(0f, 0f, 0f) : new Vector3(0f, 180f, 0f);
 
-                GameObject attack = Instantiate(mediumAttack, transform.position, Quaternion.Euler(rotation));
-                attack.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.transform.forward.z * attackForce, 0);
+                    GameObject attack = Instantiate(mediumAttack, transform.position, Quaternion.Euler(rotation));
+                    attack.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.transform.forward.z * attackForce, 0);
+                }
             }
         }
         

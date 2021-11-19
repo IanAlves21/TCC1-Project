@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5007187915639606060}
   - component: {fileID: 9100437572665525568}
   - component: {fileID: 2377772090515471233}
+  - component: {fileID: 3457275482633251666}
   m_Layer: 0
   m_Name: MediumAttack
   m_TagString: Untagged
@@ -151,3 +152,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.45789316, y: 0.23631978}
   m_EdgeRadius: 0
+--- !u!114 &3457275482633251666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007187915639606059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f058951348690f245a7d883a8258e537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5007187915639606060}
+  rigidbody: {fileID: 9100437572665525568}
+  boxCollider: {fileID: 2377772090515471233}
+  damage: 0

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -4344519753083296182}
   m_Layer: 0
   m_Name: PunkPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,9 +153,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 10
+  attackForce: -500
   rigidBody: {fileID: 6008576104586846638}
   animator: {fileID: 6008576104586846632}
   photonView: {fileID: -4344519753083296182}
+  mediumAttack: {fileID: 0}
 --- !u!95 &6008576104586846632
 Animator:
   serializedVersion: 3

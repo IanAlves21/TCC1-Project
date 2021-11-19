@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6060882998895540562}
   m_Layer: 0
   m_Name: CyborgPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,9 +153,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 10
+  attackForce: -500
   rigidBody: {fileID: 210956274916245751}
   animator: {fileID: 210956274916245707}
   photonView: {fileID: 6060882998895540562}
+  mediumAttack: {fileID: 0}
 --- !u!95 &210956274916245707
 Animator:
   serializedVersion: 3
