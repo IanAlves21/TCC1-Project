@@ -8,9 +8,11 @@ namespace Project.Player.Scripts
     {
         [SerializeField] private float speed = 15;
         [SerializeField] private float jumpForce = 10;
+        [SerializeField] private float attackForce = 10;
         [SerializeField] private Rigidbody2D  rigidBody;
         [SerializeField] private Animator animator;
         [SerializeField] private PhotonView photonView;
+        [SerializeField] private GameObject mediumAttack;
 
         private bool isJumping = false;
         private bool canDoubleJump = true;
@@ -22,6 +24,8 @@ namespace Project.Player.Scripts
                 photonView.RPC("Move", RpcTarget.All, gameObject.name, Time.deltaTime, Input.GetAxis("Horizontal"));
                 photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
             }
+
+            VerifyAttack();
         }
 
         [PunRPC]
@@ -75,11 +79,33 @@ namespace Project.Player.Scripts
             }
         }
 
+        [PunRPC]
+        private void RPC_ApplyUniquePlayerName(string uniquePlayerNameKey, string playerName)
+        {
+            if (playerName == gameObject.name)
+            {
+                gameObject.name = uniquePlayerNameKey;
+            }
+        }
+        
         private void Jump()
         {
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
 
+        private void VerifyAttack()
+        {
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                animator.SetTrigger("specialAttack");
+
+                Vector3 rotation = transform.eulerAngles.y != 0 ? new Vector3(0f, 0f, 0f) : new Vector3(0f, 180f, 0f);
+
+                GameObject attack = Instantiate(mediumAttack, transform.position, Quaternion.Euler(rotation));
+                attack.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.transform.forward.z * attackForce, 0);
+            }
+        }
+        
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.CompareTag("Ground"))
@@ -96,17 +122,6 @@ namespace Project.Player.Scripts
             if (collision.collider.CompareTag("Ground"))
             {
                 isJumping = true;
-            }
-        }
-        
-        [PunRPC]
-        private void RPC_ApplyUniquePlayerName(string uniquePlayerNameKey, string playerName)
-        {
-            Debug.Log("aaaaaaaaaaaaaaaaaa" + gameObject.name);
-            if (playerName == gameObject.name)
-            {
-                Debug.Log("aqui ---------------------> " + uniquePlayerNameKey);
-                gameObject.name = uniquePlayerNameKey;
             }
         }
     }
