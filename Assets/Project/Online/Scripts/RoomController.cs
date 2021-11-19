@@ -10,6 +10,8 @@ namespace Project.Online.Scripts
 {
     public class RoomController : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
+        [SerializeField] private Vector3[] spawnPoints;
+        
         public static RoomController Room;
         private PhotonView photonView;
 
@@ -134,7 +136,7 @@ namespace Project.Online.Scripts
         [PunRPC]
         private void RPC_CreatePlayer()
         {
-            GameObject player = PhotonNetwork.Instantiate(RoomController.Room.selectedCharacter, Vector3.zero, quaternion.identity);
+            GameObject player = PhotonNetwork.Instantiate(RoomController.Room.selectedCharacter, spawnPoints[PhotonNetwork.PlayerList.Length-1], quaternion.identity);
             string uniquePlayerNameKey = player.name + GenerateUniqueKey();
 
             player.GetComponent<PhotonView>().RPC("RPC_ApplyUniquePlayerName", RpcTarget.AllBuffered, uniquePlayerNameKey, player.name);

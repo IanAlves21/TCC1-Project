@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735c510df8c8a27498cc24a1b7a22f8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoints:
+  - {x: 1.92, y: -1.49, z: 0}
+  - {x: -7.73, y: -1.49, z: 0}
+  selectedCharacter: 
   isGameLoaded: 0
   currentScene: 0
   playersInRoom: 0
