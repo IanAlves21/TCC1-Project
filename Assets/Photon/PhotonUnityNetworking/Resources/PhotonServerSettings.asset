@@ -44,6 +44,7 @@ MonoBehaviour:
   - RPC_ApplyUniquePlayerName
   - Move
   - VerifyJump
+  - VerifyAttack
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
