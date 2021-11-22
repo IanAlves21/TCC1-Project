@@ -16,8 +16,8 @@ namespace Project.Player.Scripts
         [SerializeField] private Animator animator;
         [SerializeField] private PhotonView photonView;
         [SerializeField] private GameObject mediumAttack;
-        [SerializeField] private BoxCollider2D attackCollider;
-        [SerializeField] private GameObject attackGameObject;
+        // [SerializeField] private BoxCollider2D attackCollider;
+        // [SerializeField] private GameObject attackGameObject;
 
         private bool isJumping = false;
         private bool canDoubleJump = true;
@@ -34,7 +34,7 @@ namespace Project.Player.Scripts
                 Move();
                 photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
                 photonView.RPC("VerifyAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.C));
-                photonView.RPC("VerifySimpleAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.Z));
+                // photonView.RPC("VerifySimpleAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.Z));
             }
         }
 
@@ -111,33 +111,33 @@ namespace Project.Player.Scripts
 
                     Vector3 rotation = transform.eulerAngles.y != 0 ? new Vector3(0f, 0f, 0f) : new Vector3(0f, 180f, 0f);
 
-                    GameObject attack = Instantiate(mediumAttack, transform.position, Quaternion.Euler(rotation));
+                    GameObject attack = Instantiate(mediumAttack, transform.position, name.Contains("Biker")? Quaternion.Euler(rotation): transform.rotation);
                     attack.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.transform.forward.z * attackForce, 0);
                 }
             }
         }
         
-        [PunRPC]
-        private void VerifySimpleAttack(string name, bool keyCode)
-        {
-            if (name == gameObject.name)
-            {
-                if(keyCode)
-                {
-                    animator.SetTrigger("simpleAttack");
-                    
-                    attackGameObject.SetActive(true);
-                    StartCoroutine(DeActivateAttackCollider());
-                }
-            }
-        }
-        
-        private IEnumerator DeActivateAttackCollider()
-        {
-            yield return new WaitForSeconds(0.65f);
-            
-            attackGameObject.SetActive(false);
-        }
+        // [PunRPC]
+        // private void VerifySimpleAttack(string name, bool keyCode)
+        // {
+        //     if (name == gameObject.name)
+        //     {
+        //         if(keyCode)
+        //         {
+        //             animator.SetTrigger("simpleAttack");
+        //             
+        //             attackGameObject.SetActive(true);
+        //             StartCoroutine(DeActivateAttackCollider());
+        //         }
+        //     }
+        // }
+        //
+        // private IEnumerator DeActivateAttackCollider()
+        // {
+        //     yield return new WaitForSeconds(0.65f);
+        //     
+        //     attackGameObject.SetActive(false);
+        // }
         
         private void OnCollisionEnter2D(Collision2D collision)
         {

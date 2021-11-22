@@ -161,8 +161,6 @@ MonoBehaviour:
   animator: {fileID: 2152969822443377391}
   photonView: {fileID: 8742338815754008258}
   mediumAttack: {fileID: 5007187915639606059, guid: 88c6f24d3b314a54cb08204f6759635e, type: 3}
-  attackCollider: {fileID: 4762310456962012806}
-  attackGameObject: {fileID: 3892232577271322515}
 --- !u!95 &2152969822443377391
 Animator:
   serializedVersion: 3
