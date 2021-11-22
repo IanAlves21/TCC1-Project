@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Photon.Pun;
+using Project.Online.Scripts;
 using UnityEngine;
 
 namespace Project.Player.Scripts
@@ -13,9 +16,16 @@ namespace Project.Player.Scripts
         [SerializeField] private Animator animator;
         [SerializeField] private PhotonView photonView;
         [SerializeField] private GameObject mediumAttack;
+        [SerializeField] private BoxCollider2D attackCollider;
+        [SerializeField] private GameObject attackGameObject;
 
         private bool isJumping = false;
         private bool canDoubleJump = true;
+
+        private void Awake()
+        {
+            RoomController.Room.SetPlayers(gameObject);
+        }
 
         void Update()
         {
@@ -24,6 +34,7 @@ namespace Project.Player.Scripts
                 photonView.RPC("Move", RpcTarget.All, gameObject.name, Time.deltaTime, Input.GetAxis("Horizontal"));
                 photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
                 photonView.RPC("VerifyAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.C));
+                photonView.RPC("VerifySimpleAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.Z));
             }
         }
 
@@ -109,6 +120,28 @@ namespace Project.Player.Scripts
             }
         }
         
+        [PunRPC]
+        private void VerifySimpleAttack(string name, bool keyCode)
+        {
+            if (name == gameObject.name)
+            {
+                if(keyCode)
+                {
+                    animator.SetTrigger("simpleAttack");
+                    
+                    attackGameObject.SetActive(true);
+                    StartCoroutine(DeActivateAttackCollider());
+                }
+            }
+        }
+        
+        private IEnumerator DeActivateAttackCollider()
+        {
+            yield return new WaitForSeconds(0.65f);
+            
+            attackGameObject.SetActive(false);
+        }
+        
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.CompareTag("Ground"))
@@ -126,6 +159,11 @@ namespace Project.Player.Scripts
             {
                 isJumping = true;
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("dadakljdakjdakwjh");
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,6 +12,7 @@ namespace Project.Online.Scripts
     public class RoomController : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         [SerializeField] private Vector3[] spawnPoints;
+        [SerializeField] private List<GameObject> players;
         
         public static RoomController Room;
         private PhotonView photonView;
@@ -89,6 +91,16 @@ namespace Project.Online.Scripts
                     }
                 }
             }
+        }
+        
+        public void SetPlayers(GameObject element)
+        {
+            this.players.Add(element);
+        }
+        
+        public List<GameObject> GetPlayers()
+        {
+            return this.players;
         }
 
         private void RestartTimer()
