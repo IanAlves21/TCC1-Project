@@ -31,36 +31,33 @@ namespace Project.Player.Scripts
         {
             if (photonView.IsMine)
             {
-                photonView.RPC("Move", RpcTarget.All, gameObject.name, Time.deltaTime, Input.GetAxis("Horizontal"));
+                Move();
                 photonView.RPC("VerifyJump", RpcTarget.All, gameObject.name, Input.GetButtonDown("Jump"));
                 photonView.RPC("VerifyAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.C));
                 photonView.RPC("VerifySimpleAttack", RpcTarget.All, gameObject.name, Input.GetKeyDown(KeyCode.Z));
             }
         }
 
-        [PunRPC]
-        private void Move(string name, float deltaTime, float horizontalMove)
-        {
-            if (gameObject.name == name)
-            {
-                Vector3 movement = new Vector3(horizontalMove, 0f, 0f);
-                
-                transform.position += movement * deltaTime * speed;
+         private void Move()
+         {
+            float horizontalMove = Input.GetAxis("Horizontal");
+            Vector3 movement = new Vector3(horizontalMove, 0f, 0f);
 
-                if (horizontalMove > 0)
-                {
-                    animator.SetBool("run", true);
-                    transform.eulerAngles = new Vector3(0f, 0f, 0f);
-                }
-                if (horizontalMove < 0)
-                {
-                    animator.SetBool("run", true);
-                    transform.eulerAngles = new Vector3(0f, 180f, 0f);
-                }
-                if (horizontalMove == 0)
-                {
-                    animator.SetBool("run", false);
-                }
+            transform.position += movement * Time.deltaTime * speed;
+
+            if (horizontalMove > 0)
+            {
+                animator.SetBool("run", true);
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            }
+            if (horizontalMove < 0)
+            {
+                animator.SetBool("run", true);
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            }
+            if (horizontalMove == 0)
+            {
+                animator.SetBool("run", false);
             }
         }
         
