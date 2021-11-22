@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6008576104586846633}
   - component: {fileID: 6008576104586846632}
   - component: {fileID: -4344519753083296182}
+  - component: {fileID: 6981371401077426414}
+  - component: {fileID: 2354557707797400330}
   m_Layer: 0
   m_Name: PunkPlayer
   m_TagString: Player
@@ -153,11 +155,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 10
-  attackForce: -500
+  attackForce: 10
   rigidBody: {fileID: 6008576104586846638}
   animator: {fileID: 6008576104586846632}
   photonView: {fileID: -4344519753083296182}
-  mediumAttack: {fileID: 0}
+  mediumAttack: {fileID: 2086448247512908091, guid: 2a7e7d3d2d8ef3a4691a4cef2035ce7d, type: 3}
 --- !u!95 &6008576104586846632
 Animator:
   serializedVersion: 3
@@ -195,7 +197,61 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6981371401077426414}
+  - {fileID: 2354557707797400330}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6981371401077426414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008576104586846635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2354557707797400330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008576104586846635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: jump
+  - Type: 4
+    SynchronizeType: 2
+    Name: run
+  - Type: 4
+    SynchronizeType: 2
+    Name: doubleJump
+  - Type: 4
+    SynchronizeType: 2
+    Name: die
+  - Type: 9
+    SynchronizeType: 2
+    Name: specialAttack
+  - Type: 9
+    SynchronizeType: 2
+    Name: hurt
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
