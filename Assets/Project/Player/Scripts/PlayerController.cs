@@ -158,9 +158,9 @@ namespace Project.Player.Scripts
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            Debug.Log("dadakljdakjdakwjh");
-        }
+        // private void OnTriggerEnter2D(Collider2D other)
+        // {
+        //     Debug.Log("dadakljdakjdakwjh");
+        // }
     }
 }
