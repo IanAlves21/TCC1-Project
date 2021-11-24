@@ -21,5 +21,10 @@ namespace Project.Attacks.Scripts
                 Destroy(this.gameObject, 0.5f);
             }
         }
+
+        public float GetDamage()
+        {
+            return this.damage;
+        }
     }
 }

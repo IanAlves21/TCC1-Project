@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3457275482633251666}
   m_Layer: 0
   m_Name: MediumAttackBiker
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,4 +167,4 @@ MonoBehaviour:
   animator: {fileID: 5007187915639606060}
   rigidbody: {fileID: 9100437572665525568}
   boxCollider: {fileID: 2377772090515471233}
-  damage: 0
+  damage: 35
