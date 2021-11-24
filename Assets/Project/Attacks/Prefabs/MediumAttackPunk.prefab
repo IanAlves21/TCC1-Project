@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4616701430460723872}
   m_Layer: 0
   m_Name: MediumAttackPunk
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,4 +167,4 @@ MonoBehaviour:
   animator: {fileID: 739634511763822632}
   rigidbody: {fileID: 2099184824588002022}
   boxCollider: {fileID: 1116732490265747219}
-  damage: 0
+  damage: 20
