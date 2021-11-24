@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using Photon.Pun;
+using Project.Player.Scripts;
 using UnityEngine;
 
 namespace Project.EnviromentObjects.Scripts
@@ -56,6 +58,12 @@ namespace Project.EnviromentObjects.Scripts
             if (collision.gameObject.CompareTag("Ground"))
             {
                 StartCoroutine(ChangeFallValue(false));
+            }
+            
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                this.fall = false;
+                collision.gameObject.GetComponent<PhotonView>().RPC("Die", RpcTarget.AllBuffered, collision.gameObject.name);
             }
         }
 
