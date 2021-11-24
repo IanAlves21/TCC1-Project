@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+namespace Project.Player.Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerInfo : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private float healthPoint = 100.0f;
+        [SerializeField] private bool isAlive = true;
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void SetHealthPoint(float damage)
+        {
+            this.healthPoint += damage;
+        }
         
+        public float GetHealthPoint()
+        {
+            return (this.healthPoint);
+        }
+        
+        public void SetIsAlive(bool value)
+        {
+            this.isAlive = value;
+        }
+        
+        public bool GetIsAlive()
+        {
+            return (this.isAlive);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Project.Player.Scripts
         [SerializeField] private Animator animator;
         [SerializeField] private PhotonView photonView;
         [SerializeField] private GameObject mediumAttack;
+        [SerializeField] private PlayerInfo playerInfo;
+        [SerializeField] private PolygonCollider2D collider;
         // [SerializeField] private BoxCollider2D attackCollider;
         // [SerializeField] private GameObject attackGameObject;
 
@@ -60,6 +62,42 @@ namespace Project.Player.Scripts
                 animator.SetBool("run", false);
             }
         }
+         
+         [PunRPC]
+         public void Hurt(string name, float damage)
+         {
+             if (name == gameObject.name)
+             {
+                 animator.SetTrigger("hurt");
+                 playerInfo.SetHealthPoint(-1 * damage);
+
+                 if (playerInfo.GetHealthPoint() <= 0)
+                 {
+                     photonView.RPC("Die", RpcTarget.All, gameObject.name);
+                 }
+             }
+         }
+
+         [PunRPC]
+         public void Die(string name)
+         {
+             if (name == gameObject.name)
+             {
+                 this.playerInfo.SetIsAlive(false);
+                 this.playerInfo.SetHealthPoint(0.0f);
+                 this.animator.SetBool("die", true);
+                 this.rigidBody.simulated = false;
+                 this.collider.enabled = false;
+                 this.gameObject.GetComponent<PlayerController>().enabled = false;
+                 StartCoroutine(DisableGameObject());
+             }
+         }
+
+         private IEnumerator DisableGameObject()
+         {
+             yield return new WaitForSeconds(3);
+             this.gameObject.SetActive(false);
+         }
         
         [PunRPC]
         private void VerifyJump(string name, bool buttonDownJump)

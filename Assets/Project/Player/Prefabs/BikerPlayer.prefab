@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8742338815754008258}
   - component: {fileID: -3996594373062866379}
   - component: {fileID: 8466414131945436326}
+  - component: {fileID: 4735658073406700285}
   m_Layer: 0
   m_Name: BikerPlayer
   m_TagString: Player
@@ -161,6 +162,8 @@ MonoBehaviour:
   animator: {fileID: 2152969822443377391}
   photonView: {fileID: 8742338815754008258}
   mediumAttack: {fileID: 5007187915639606059, guid: 88c6f24d3b314a54cb08204f6759635e, type: 3}
+  playerInfo: {fileID: 4735658073406700285}
+  collider: {fileID: 2152969822443377388}
 --- !u!95 &2152969822443377391
 Animator:
   serializedVersion: 3
@@ -259,6 +262,20 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &4735658073406700285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152969822443377393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd69e60e251ee345bdbdeb89e8fb6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoint: 100
+  isAlive: 1
 --- !u!1 &3892232577271322515
 GameObject:
   m_ObjectHideFlags: 0

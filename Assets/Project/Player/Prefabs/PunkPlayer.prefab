@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -4344519753083296182}
   - component: {fileID: 6981371401077426414}
   - component: {fileID: 2354557707797400330}
+  - component: {fileID: 8115084137555844170}
   m_Layer: 0
   m_Name: PunkPlayer
   m_TagString: Player
@@ -160,6 +161,8 @@ MonoBehaviour:
   animator: {fileID: 6008576104586846632}
   photonView: {fileID: -4344519753083296182}
   mediumAttack: {fileID: 2086448247512908091, guid: 2a7e7d3d2d8ef3a4691a4cef2035ce7d, type: 3}
+  playerInfo: {fileID: 8115084137555844170}
+  collider: {fileID: 6008576104586846639}
 --- !u!95 &6008576104586846632
 Animator:
   serializedVersion: 3
@@ -255,3 +258,17 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &8115084137555844170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008576104586846635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd69e60e251ee345bdbdeb89e8fb6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoint: 100
+  isAlive: 1
