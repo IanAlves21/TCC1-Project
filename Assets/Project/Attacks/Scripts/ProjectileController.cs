@@ -1,4 +1,6 @@
 using System;
+using Photon.Pun;
+using Project.Enemies.Scripts;
 using UnityEngine;
 
 namespace Project.Attacks.Scripts
@@ -19,6 +21,11 @@ namespace Project.Attacks.Scripts
                 boxCollider.enabled = false;
                 animator.SetBool("destroy", true);
                 Destroy(this.gameObject, 0.5f);
+            }
+            
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                collision.gameObject.GetComponent<PhotonView>().RPC("Hurt", RpcTarget.AllBuffered, collision.gameObject.name, damage);
             }
         }
 
