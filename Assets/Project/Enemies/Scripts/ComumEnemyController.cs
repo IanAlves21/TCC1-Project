@@ -5,33 +5,16 @@ namespace Project.Enemies.Scripts
 {
     public class ComumEnemyController : MonoBehaviour
     {
-        [SerializeField] private Rigidbody2D rigidbody;
         [SerializeField] private Animator animator;
-        [SerializeField] private Transform rightCol;
-        [SerializeField] private Transform leftCol;
         [SerializeField] private Transform headPoint;
-
         [SerializeField] private float speed;
-        private bool colliding;
-
+        [SerializeField] private float way = -1f;
         [SerializeField] private LayerMask layer;
-        
-        void Start()
-        {
-        
-        }
 
         void Update()
         {
-            rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
-
-            colliding = Physics2D.Linecast(rightCol.position, leftCol.position, layer);
-
-            if (colliding)
-            {
-                transform.localScale = new Vector2(transform.localScale.x * -1f, transform.localScale.y);
-                speed *= -1f;
-            }
+            Vector3 movement = new Vector3(1f, 0f, 0f);
+            transform.position += movement * Time.deltaTime * speed*way;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -47,6 +30,12 @@ namespace Project.Enemies.Scripts
                     animator.SetTrigger("Hurt");
                     Destroy(gameObject, 0.33f);
                 }
+            }
+
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                way *= -1;
+                transform.localScale = new Vector2(transform.localScale.x * -1f, transform.localScale.y);
             }
         }
     }
