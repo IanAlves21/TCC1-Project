@@ -23,9 +23,17 @@ namespace Project.Camera.Scripts
                     axisPosition += element.transform.position.x;
                 }
             }
-            
-            this.gameObject.transform.position =
-                new Vector3(axisPosition/qtd, transform.position.y, transform.position.z);
+
+            if (qtd == 0)
+            {
+                this.gameObject.transform.position =
+                new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                this.gameObject.transform.position =
+                    new Vector3(axisPosition/qtd, transform.position.y, transform.position.z);
+            }
         }
     }
 }

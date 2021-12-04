@@ -41,7 +41,7 @@ namespace Project.Enemies.Scripts
                 // }
             }
 
-            if (collision.gameObject.CompareTag("Wall"))
+            if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
             {
                 way *= -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1f, transform.localScale.y);
@@ -70,7 +70,8 @@ namespace Project.Enemies.Scripts
             if (name == gameObject.name)
             {
                 this.animator.SetBool("die", true);
-                elementToNextPart.SetActive(true);
+                if(!!elementToNextPart)
+                    elementToNextPart.SetActive(true);
                 Destroy(gameObject, 0.5f);
             }
         }
