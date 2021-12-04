@@ -12,6 +12,7 @@ namespace Project.Online.Scripts
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject cancelButton;
         [SerializeField] private GameObject[] gameObjectsToActive;
+        [SerializeField] private GameObject[] gameObjectsToConfig;
         [SerializeField] private GameObject[] availableCharactersPrefabs;
         [SerializeField] private int roomSize;
 
@@ -27,11 +28,15 @@ namespace Project.Online.Scripts
 
         public void StartButtonClick()
         {
-            // startButton.SetActive(false);
-            // cancelButton.SetActive(true);
-            // PhotonNetwork.JoinRandomRoom();
-            // Debug.Log("Start game");
             foreach (var go in gameObjectsToActive)
+            {
+                go.SetActive(!go.activeSelf);
+            }
+        }
+        
+        public void ConfigButtonClick()
+        {
+            foreach (var go in gameObjectsToConfig)
             {
                 go.SetActive(!go.activeSelf);
             }
