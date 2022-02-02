@@ -12,7 +12,8 @@ namespace Project.Camera.Scripts
         {
             List<GameObject> players = RoomController.Room.GetPlayers();
             
-            float axisPosition = 0.0f;
+            float axisXPosition = 0.0f;
+            float axisYPosition = 0.0f;
             int qtd = 0;
             
             foreach (var element in players)
@@ -20,19 +21,20 @@ namespace Project.Camera.Scripts
                 if (element.GetComponent<PlayerInfo>().GetIsAlive())
                 {
                     qtd++;
-                    axisPosition += element.transform.position.x;
+                    axisXPosition += element.transform.position.x;
+                    axisYPosition += element.transform.position.y;
                 }
             }
 
             if (qtd == 0)
             {
                 this.gameObject.transform.position =
-                new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                    new Vector3(transform.position.x, transform.position.y, transform.position.z);
             }
             else
             {
                 this.gameObject.transform.position =
-                    new Vector3(axisPosition/qtd, transform.position.y, transform.position.z);
+                    new Vector3(axisXPosition/qtd, axisYPosition/qtd, transform.position.z);
             }
         }
     }

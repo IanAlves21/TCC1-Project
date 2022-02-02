@@ -36,7 +36,7 @@ namespace Project.EnviromentObjects.Scripts
             if (transform.position.y < startingPosition.y)
             {
                 transform.position =
-                    new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z);
+                    new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
             }
             else
             {
@@ -46,11 +46,11 @@ namespace Project.EnviromentObjects.Scripts
         
         private void Fall()
         {
-            if (transform.position.y > -3.7f)
-            {
-                transform.position =
-                    new Vector3(transform.position.x, transform.position.y - 0.03f, transform.position.z);
-            }
+            // if (transform.position.y > -3.7f)
+            // {
+            //     transform.position =
+            //         new Vector3(transform.position.x, transform.position.y - 0.03f, transform.position.z);
+            // }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
