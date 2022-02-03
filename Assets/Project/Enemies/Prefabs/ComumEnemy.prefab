@@ -172,7 +172,7 @@ MonoBehaviour:
   speed: 10
   way: -1
   life: 300
-  damage: 50
+  damage: 10
   elementToNextPart: {fileID: 0}
 --- !u!114 &3090833171181051972
 MonoBehaviour:
