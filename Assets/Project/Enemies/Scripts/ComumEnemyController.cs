@@ -14,7 +14,7 @@ namespace Project.Enemies.Scripts
         [SerializeField] private float way = -1f;
 
         [SerializeField] private float life = 500f;
-        [SerializeField] private float damage = 50f;
+        [SerializeField] private float damage = 10f;
 
         [SerializeField] private GameObject elementToNextPart;
 

@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Photon.Pun;
 using Project.Online.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Project.Player.Scripts
 {
@@ -18,6 +20,7 @@ namespace Project.Player.Scripts
         [SerializeField] private GameObject mediumAttack;
         [SerializeField] private PlayerInfo playerInfo;
         [SerializeField] private PolygonCollider2D collider;
+        [SerializeField] private Text healthPointText;
         // [SerializeField] private BoxCollider2D attackCollider;
         // [SerializeField] private GameObject attackGameObject;
 
@@ -66,11 +69,12 @@ namespace Project.Player.Scripts
          [PunRPC]
          public void Hurt(string name, float damage)
          {
-             if (name == gameObject.name)
+             if (name == gameObject.name && photonView.IsMine)
              {
                  animator.SetTrigger("hurt");
                  playerInfo.SetHealthPoint(-1 * damage);
-
+                 healthPointText.text = playerInfo.GetHealthPoint().ToString(CultureInfo.InvariantCulture);
+                 
                  if (playerInfo.GetHealthPoint() <= 0)
                  {
                      photonView.RPC("Die", RpcTarget.All, gameObject.name);
@@ -200,5 +204,10 @@ namespace Project.Player.Scripts
         // {
         //     Debug.Log("dadakljdakjdakwjh");
         // }
+
+        public void SetHealthText(Text t)
+        {
+            this.healthPointText = t;
+        }
     }
 }

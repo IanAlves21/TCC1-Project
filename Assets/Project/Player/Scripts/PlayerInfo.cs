@@ -10,6 +10,9 @@ namespace Project.Player.Scripts
         public void SetHealthPoint(float damage)
         {
             this.healthPoint += damage;
+            
+            if (this.healthPoint < 0)
+                this.healthPoint = 0;
         }
         
         public float GetHealthPoint()
@@ -24,7 +27,7 @@ namespace Project.Player.Scripts
         
         public bool GetIsAlive()
         {
-            return (this.isAlive);
+            return(this.healthPoint>0);
         }
     }
 }

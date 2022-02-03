@@ -1,17 +1,19 @@
 using System;
 using Photon.Pun;
-using Project.Online.Scripts;
+using Project.Player.Scripts;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Project.Initializer
 {
     public class Initializer : MonoBehaviour
     {
+        [SerializeField] private Text healthText;
         [SerializeField] private Vector3[] spawnPoints;
         [SerializeField] private String[] objectsName;
         
-        void Awake()
+        private void Awake()
         {
             if(!PhotonNetwork.IsMasterClient) return;
             
@@ -24,7 +26,20 @@ namespace Project.Initializer
             }
         }
 
-        void Update()
+        private void Start()
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (var p in players)
+            {
+                if (p.GetComponent<PhotonView>().IsMine)
+                {
+                    p.GetComponent<PlayerController>().SetHealthText(healthText);
+                }
+            }
+        }
+
+        private void Update()
         {
             Debug.Log("IsMasterClient --> " + PhotonNetwork.IsMasterClient);
         }
