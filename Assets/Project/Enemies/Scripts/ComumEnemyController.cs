@@ -40,12 +40,13 @@ namespace Project.Enemies.Scripts
                     // Destroy(gameObject, 0.33f);
                 // }
             }
+            Debug.Log("colidiu com ---> " + collision.gameObject.name);
 
-            if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
-            {
+            // if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+            // {
                 way *= -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1f, transform.localScale.y);
-            }
+            // }
         }
         
         [PunRPC]
@@ -69,10 +70,20 @@ namespace Project.Enemies.Scripts
         {
             if (name == gameObject.name)
             {
+                speed = 0.0f;
                 this.animator.SetBool("die", true);
                 if(!!elementToNextPart)
                     elementToNextPart.SetActive(true);
                 Destroy(gameObject, 0.5f);
+            }
+        }
+        
+        [PunRPC]
+        private void RPC_ApplyUniquePlayerName(string uniqueObjectNameKey, string objectName)
+        {
+            if (objectName == gameObject.name)
+            {
+                gameObject.name = uniqueObjectNameKey;
             }
         }
     }
