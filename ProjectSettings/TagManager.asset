@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - Enemy
   - KillPlayer
+  - EnemyWarningArea
   layers:
   - Default
   - TransparentFX
