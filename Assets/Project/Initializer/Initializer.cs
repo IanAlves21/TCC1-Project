@@ -38,11 +38,6 @@ namespace Project.Initializer
                 }
             }
         }
-
-        private void Update()
-        {
-            Debug.Log("IsMasterClient --> " + PhotonNetwork.IsMasterClient);
-        }
         
         private string GenerateUniqueKey()
         {

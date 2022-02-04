@@ -15,23 +15,36 @@ namespace Project.Attacks.Scripts
         
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!collision.gameObject.CompareTag("Player"))
+            switch (collision.gameObject.tag)
             {
-                rigidbody.velocity = Vector2.zero;
-                boxCollider.enabled = false;
-                animator.SetBool("destroy", true);
-                Destroy(this.gameObject, 0.5f);
-            }
-            
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                collision.gameObject.GetComponent<PhotonView>().RPC("Hurt", RpcTarget.AllBuffered, collision.gameObject.name, damage);
+                case "Player":
+                    break;
+                
+                case "Enemy":
+                    DestroyObject();
+                    collision.gameObject.GetComponent<PhotonView>().RPC("Hurt", RpcTarget.AllBuffered, collision.gameObject.name, damage);
+                    break;
+                
+                case "Ground":
+                    DestroyObject();
+                    break;
+                
+                default:
+                    break;
             }
         }
 
         public float GetDamage()
         {
             return this.damage;
+        }
+
+        private void DestroyObject()
+        {
+            rigidbody.velocity = Vector2.zero;
+            boxCollider.enabled = false;
+            animator.SetBool("destroy", true);
+            Destroy(this.gameObject, 0.5f);
         }
     }
 }
