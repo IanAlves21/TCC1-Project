@@ -209,5 +209,11 @@ namespace Project.Player.Scripts
         {
             this.healthPointText = t;
         }
+        
+        public void IncreasePlayerLife(float value)
+        {
+            playerInfo.SetHealthPoint(value);
+            healthPointText.text = playerInfo.GetHealthPoint().ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

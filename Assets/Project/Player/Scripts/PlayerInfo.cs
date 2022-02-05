@@ -13,6 +13,9 @@ namespace Project.Player.Scripts
             
             if (this.healthPoint < 0)
                 this.healthPoint = 0;
+            
+            if (this.healthPoint > 100)
+                this.healthPoint = 100;
         }
         
         public float GetHealthPoint()

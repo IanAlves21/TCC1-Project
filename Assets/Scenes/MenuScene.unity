@@ -4242,12 +4242,20 @@ PrefabInstance:
       objectReference: {fileID: 215393172}
     - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: availableCharactersPrefabs.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: availableCharactersPrefabs.Array.data[3]
       value: 
       objectReference: {fileID: 1689866831511430, guid: 051e2b74ff3db004c8b9dfd470910574, type: 3}
+    - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
+      propertyPath: availableCharactersPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 6633173702276721730, guid: 993df2884ae177147ba460cdee7f8b94, type: 3}
+    - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
+      propertyPath: availableCharactersPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 7664692209295562424, guid: 4cb802b29bd9dd9498fb91f8a8dca457, type: 3}
     - target: {fileID: 2157805952333111487, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: m_Name
       value: LobbyController
