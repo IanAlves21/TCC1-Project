@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 8647275087743617390}
   animator: {fileID: 5226928329542236978}
+  photonView: {fileID: 2051522526331533177}
 --- !u!95 &5226928329542236978
 Animator:
   serializedVersion: 3

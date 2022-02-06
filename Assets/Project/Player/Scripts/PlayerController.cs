@@ -210,10 +210,18 @@ namespace Project.Player.Scripts
             this.healthPointText = t;
         }
         
-        public void IncreasePlayerLife(float value)
+        [PunRPC]
+        public void IncreasePlayerLife(float value, string playerName)
         {
-            playerInfo.SetHealthPoint(value);
-            healthPointText.text = playerInfo.GetHealthPoint().ToString(CultureInfo.InvariantCulture);
+            if (playerName == gameObject.name)
+            {
+                playerInfo.SetHealthPoint(value);
+                
+                if (photonView.IsMine)
+                {
+                    healthPointText.text = playerInfo.GetHealthPoint().ToString(CultureInfo.InvariantCulture);
+                }
+            }
         }
     }
 }
