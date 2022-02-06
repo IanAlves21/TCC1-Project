@@ -32,10 +32,15 @@ namespace Project.Enemies.Scripts
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                int direction = 1;
                 animator.SetBool("Attack", true);
                 movement = collision.gameObject.transform.position - transform.position;
                 movement = movement / movement.magnitude;
-                transform.localScale = new Vector2(Math.Abs(transform.localScale.x)*movement.x, transform.localScale.y);    
+                
+                if (movement.x < 0)
+                    direction = -1;
+                
+                transform.localScale = new Vector2(Math.Abs(transform.localScale.x)*direction, transform.localScale.y);    
             }
         }
 

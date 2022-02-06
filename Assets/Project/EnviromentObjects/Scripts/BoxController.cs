@@ -77,8 +77,9 @@ namespace Project.EnviromentObjects.Scripts
                 }
             }
             
-            if(objectToSpawn!="")
-                PhotonNetwork.Instantiate(objectToSpawn, transform.position, Quaternion.identity, 0);
+            if(PhotonNetwork.IsMasterClient)
+                if(objectToSpawn!="")
+                    PhotonNetwork.Instantiate(objectToSpawn, transform.position, Quaternion.identity, 0);
             
             Debug.Log("random number generated ----> " + randomNumber);
         }

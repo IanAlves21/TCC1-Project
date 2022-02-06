@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using Project.Player.Scripts;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Project.Collectibles.Scripts
     {
         [SerializeField] private CircleCollider2D circleCollider;
         [SerializeField] private Animator animator;
+        [SerializeField] private PhotonView photonView;
 
         private float lifeValue = 15.0f;
 
@@ -15,11 +17,18 @@ namespace Project.Collectibles.Scripts
         {
             if(collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerController>().IncreasePlayerLife(lifeValue);
-                circleCollider.enabled = false;
-                animator.SetTrigger("Destroy");
-                Destroy(gameObject, 0.5f);
+                photonView.RPC("DestroyCollectibleItem", RpcTarget.All);
+                collision.gameObject.GetComponent<PhotonView>().RPC("IncreasePlayerLife", RpcTarget.All, lifeValue, collision.gameObject.name);
             }
         }
+        
+        [PunRPC]
+        public void DestroyCollectibleItem()
+        {
+            circleCollider.enabled = false;
+            animator.SetTrigger("Destroy");
+            Destroy(gameObject, 0.5f);
+        }
+
     }
 }
