@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.Demo.Cockpit.Forms;
 using Photon.Realtime;
 using UnityEngine;
@@ -9,7 +11,14 @@ namespace Project.Online.Scripts
 {
     public class LobbyController : MonoBehaviourPunCallbacks
     {
+        [SerializeField] private GameObject roomListPanel;
+        [SerializeField] private GameObject mainMenuPanel;
+        [SerializeField] private GameObject characterMenuPanel;
+        
         [SerializeField] private GameObject startButton;
+        [SerializeField] private GameObject joinButton;
+        [SerializeField] private GameObject rowItemListPrefab;
+        [SerializeField] private GameObject rootListGameObject;
         [SerializeField] private GameObject cancelButton;
         [SerializeField] private GameObject[] gameObjectsToActive;
         [SerializeField] private GameObject[] gameObjectsToConfig;
@@ -20,9 +29,15 @@ namespace Project.Online.Scripts
         
         private LobbyController lobby;
         
+        private Dictionary<string, RoomInfo> cachedRoomList;
+        private Dictionary<string, GameObject> roomListEntries;
+        // private Dictionary<int, GameObject> playerListEntries;
+        
         void Awake()
         {
             lobby = this;
+            cachedRoomList = new Dictionary<string, RoomInfo>();
+            roomListEntries = new Dictionary<string, GameObject>();
             LoadPrefabsToResourcesCash();
         }
 
@@ -50,6 +65,17 @@ namespace Project.Online.Scripts
             Debug.Log("Cancel");
         }
         
+        public void JoinButtonClick()
+        {
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+            }
+
+            roomListPanel.SetActive(true);
+            mainMenuPanel.SetActive(false);
+        }
+        
         public void CharacterButtonClick(int selectedCharacter)
         {
             switch(selectedCharacter)
@@ -75,8 +101,27 @@ namespace Project.Online.Scripts
         {
             startButton.SetActive(false);
             cancelButton.SetActive(true);
-            PhotonNetwork.JoinRandomRoom();
+
+            if (RoomController.Room.selectedRoomToEnter != "")
+            {
+                PhotonNetwork.JoinRoom(RoomController.Room.selectedRoomToEnter);
+            }
+            else
+            {
+                PhotonNetwork.JoinRandomRoom();
+            }
             Debug.Log("Start game");
+        }
+
+        public void BackButtonListRoom()
+        {
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveLobby();
+            }
+            
+            roomListPanel.SetActive(false);
+            mainMenuPanel.SetActive(true);
         }
         
         private void CreateRoom()
@@ -92,6 +137,57 @@ namespace Project.Online.Scripts
                 MaxPlayers = (byte) MultiplayerSettings.Settings.maxPlayers
             };
             PhotonNetwork.CreateRoom("Room" + uniqueKeyId, roomOps);
+        }
+
+        private void ClearRoomListView()
+        {
+            foreach (GameObject entry in roomListEntries.Values)
+            {
+                Destroy(entry.gameObject);
+            }
+
+            roomListEntries.Clear();
+        }
+        
+        private void UpdateCachedRoomList(List<RoomInfo> roomList)
+        {
+            foreach (RoomInfo info in roomList)
+            {
+                // Remove room from cached room list if it got closed, became invisible or was marked as removed
+                if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+                {
+                    if (cachedRoomList.ContainsKey(info.Name))
+                    {
+                        cachedRoomList.Remove(info.Name);
+                    }
+
+                    continue;
+                }
+
+                // Update cached room info
+                if (cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList[info.Name] = info;
+                }
+                // Add new room info to cache
+                else
+                {
+                    cachedRoomList.Add(info.Name, info);
+                }
+            }
+        }
+        
+        private void UpdateRoomListView()
+        {
+            foreach (RoomInfo info in cachedRoomList.Values)
+            {
+                GameObject entry = Instantiate(rowItemListPrefab);
+                entry.transform.SetParent(rootListGameObject.transform);
+                entry.transform.localScale = Vector3.one;
+                entry.GetComponent<RoomElementController>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers, characterMenuPanel, roomListPanel);
+
+                roomListEntries.Add(info.Name, entry);
+            }
         }
         
         private void LoadPrefabsToResourcesCash()
@@ -111,6 +207,7 @@ namespace Project.Online.Scripts
         {
             PhotonNetwork.AutomaticallySyncScene = true;
             startButton.SetActive(true);
+            joinButton.SetActive(true);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -123,6 +220,33 @@ namespace Project.Online.Scripts
         {
             Debug.Log("Failed to create new room... trying again");
             CreateRoom();
+        }
+
+        public override void OnJoinedLobby()
+        {
+            cachedRoomList.Clear();
+            ClearRoomListView();
+        }
+
+        public override void OnLeftLobby()
+        {
+            cachedRoomList.Clear();
+            ClearRoomListView();
+        }
+
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
+        {
+            Debug.Log("aaaaaaaaaaaaaaaaaaaa");
+            ClearRoomListView();
+
+            UpdateCachedRoomList(roomList);
+            UpdateRoomListView();
+            
+            //
+            // foreach (var r in roomList)
+            // {
+            //     Debug.Log("room --> " + r.Name);
+            // }
         }
     }
 }

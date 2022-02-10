@@ -18,6 +18,8 @@ namespace Project.Online.Scripts
         private PhotonView photonView;
 
         public string selectedCharacter;
+        
+        public string selectedRoomToEnter = "";
 
         public bool isGameLoaded;
         public int currentScene;
