@@ -164,6 +164,7 @@ MonoBehaviour:
   mediumAttack: {fileID: 5007187915639606059, guid: 88c6f24d3b314a54cb08204f6759635e, type: 3}
   playerInfo: {fileID: 4735658073406700285}
   collider: {fileID: 2152969822443377388}
+  healthPointText: {fileID: 0}
 --- !u!95 &2152969822443377391
 Animator:
   serializedVersion: 3
