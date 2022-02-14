@@ -22,7 +22,8 @@ namespace Project.Online.Scripts
                 {
                     PhotonNetwork.LeaveLobby();
                 }
-                
+
+                RoomController.Room.operation = "JoinRoom";
                 RoomController.Room.selectedRoomToEnter = roomName;
 
                 characterSelection.SetActive(true);

@@ -19,7 +19,11 @@ namespace Project.Online.Scripts
 
         public string selectedCharacter;
         
+        public string operation = "";
+
         public string selectedRoomToEnter = "";
+        public string roomName;
+        public RoomOptions roomOptions;
 
         public bool isGameLoaded;
         public int currentScene;

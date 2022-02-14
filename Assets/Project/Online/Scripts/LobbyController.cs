@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Pun.Demo.Asteroids;
-using Photon.Pun.Demo.Cockpit.Forms;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Project.Online.Scripts
 {
@@ -14,7 +13,9 @@ namespace Project.Online.Scripts
         [SerializeField] private GameObject roomListPanel;
         [SerializeField] private GameObject mainMenuPanel;
         [SerializeField] private GameObject characterMenuPanel;
-        
+        [SerializeField] private GameObject CreateRoomMenuPanel;
+        [SerializeField] private GameObject characterMenuBackButton;
+
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject joinButton;
         [SerializeField] private GameObject rowItemListPrefab;
@@ -26,7 +27,9 @@ namespace Project.Online.Scripts
         [SerializeField] private int roomSize;
 
         [SerializeField] private Button nextButton;
-        
+        [SerializeField] private InputField RoomNameInputField;
+        [SerializeField] private InputField MaxPlayersInputField;
+
         private LobbyController lobby;
         
         private Dictionary<string, RoomInfo> cachedRoomList;
@@ -43,10 +46,8 @@ namespace Project.Online.Scripts
 
         public void StartButtonClick()
         {
-            foreach (var go in gameObjectsToActive)
-            {
-                go.SetActive(!go.activeSelf);
-            }
+            mainMenuPanel.SetActive(false);
+            characterMenuPanel.SetActive(true);
         }
         
         public void ConfigButtonClick()
@@ -75,7 +76,62 @@ namespace Project.Online.Scripts
             roomListPanel.SetActive(true);
             mainMenuPanel.SetActive(false);
         }
-        
+
+        public void CharacterMenuBackButtonClick()
+        {
+            switch (RoomController.Room.operation)
+            {
+                case "JoinRoom":
+                    characterMenuPanel.SetActive(false);
+                    roomListPanel.SetActive(true);
+                    break;
+
+                case "CreateRoom":
+                    characterMenuPanel.SetActive(false);
+                    CreateRoomMenuPanel.SetActive(true);
+                    break;
+
+                default:
+                    mainMenuPanel.SetActive(true);
+                    characterMenuPanel.SetActive(false);
+                    break;
+            }
+
+            Debug.Log("Start game");
+        }
+
+        public void CreateRoomButtonClick()
+        {
+            string roomName = RoomNameInputField.text;
+            roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
+
+            byte maxPlayers;
+            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
+            maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 8);
+
+            RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
+
+            RoomController.Room.operation = "CreateRoom";
+
+            RoomController.Room.roomName = roomName;
+            RoomController.Room.roomOptions = options;
+
+            characterMenuPanel.SetActive(true);
+            CreateRoomMenuPanel.SetActive(false);
+        }
+
+        public void CreateButtonClick()
+        {
+            roomListPanel.SetActive(false);
+            CreateRoomMenuPanel.SetActive(true);
+        }
+
+        public void CreateRoomCancelButtonClick()
+        {
+            roomListPanel.SetActive(true);
+            CreateRoomMenuPanel.SetActive(false);
+        }
+
         public void CharacterButtonClick(int selectedCharacter)
         {
             switch(selectedCharacter)
@@ -102,14 +158,31 @@ namespace Project.Online.Scripts
             startButton.SetActive(false);
             cancelButton.SetActive(true);
 
-            if (RoomController.Room.selectedRoomToEnter != "")
+            switch (RoomController.Room.operation)
             {
-                PhotonNetwork.JoinRoom(RoomController.Room.selectedRoomToEnter);
+                case "JoinRoom":
+                    if (RoomController.Room.selectedRoomToEnter != "")
+                    {
+                        PhotonNetwork.JoinRoom(RoomController.Room.selectedRoomToEnter);
+                    }
+                    else
+                    {
+                        PhotonNetwork.JoinRandomRoom();
+                    }
+                    break;
+
+                case "CreateRoom":
+                    string name = RoomController.Room.roomName;
+                    RoomOptions options = RoomController.Room.roomOptions;
+
+                    PhotonNetwork.CreateRoom(name, options, null);
+                    break;
+
+                default:
+                    PhotonNetwork.JoinRandomRoom();
+                    break;
             }
-            else
-            {
-                PhotonNetwork.JoinRandomRoom();
-            }
+
             Debug.Log("Start game");
         }
 
