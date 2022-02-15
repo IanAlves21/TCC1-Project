@@ -16,6 +16,7 @@ namespace Project.Online.Scripts
         [SerializeField] private GameObject CreateRoomMenuPanel;
         [SerializeField] private GameObject characterMenuBackButton;
 
+        [SerializeField] private GameObject createRoomButton;
         [SerializeField] private GameObject startButton;
         [SerializeField] private GameObject joinButton;
         [SerializeField] private GameObject rowItemListPrefab;
@@ -44,6 +45,21 @@ namespace Project.Online.Scripts
             LoadPrefabsToResourcesCash();
         }
 
+        private void Update()
+        {
+            if (CreateRoomMenuPanel.activeSelf)
+            {
+                if(RoomNameInputField.text != "" && MaxPlayersInputField.text != "")
+                {
+                    createRoomButton.SetActive(true);
+                }
+                else
+                {
+                    createRoomButton.SetActive(false);
+                }
+            }
+        }
+
         public void StartButtonClick()
         {
             mainMenuPanel.SetActive(false);
@@ -68,10 +84,7 @@ namespace Project.Online.Scripts
         
         public void JoinButtonClick()
         {
-            if (!PhotonNetwork.InLobby)
-            {
-                PhotonNetwork.JoinLobby();
-            }
+            JoinRoomLobby();
 
             roomListPanel.SetActive(true);
             mainMenuPanel.SetActive(false);
@@ -84,6 +97,7 @@ namespace Project.Online.Scripts
                 case "JoinRoom":
                     characterMenuPanel.SetActive(false);
                     roomListPanel.SetActive(true);
+                    JoinRoomLobby();
                     break;
 
                 case "CreateRoom":
@@ -96,8 +110,20 @@ namespace Project.Online.Scripts
                     characterMenuPanel.SetActive(false);
                     break;
             }
+            RoomController.Room.operation = "";
+        }
 
-            Debug.Log("Start game");
+        private void JoinRoomLobby()
+        {
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+            }
+            else
+            {
+                PhotonNetwork.LeaveLobby();
+                PhotonNetwork.JoinLobby();
+            }
         }
 
         public void CreateRoomButtonClick()
@@ -128,8 +154,11 @@ namespace Project.Online.Scripts
 
         public void CreateRoomCancelButtonClick()
         {
+            JoinRoomLobby();
             roomListPanel.SetActive(true);
             CreateRoomMenuPanel.SetActive(false);
+            RoomNameInputField.text = "";
+            MaxPlayersInputField.text = "";
         }
 
         public void CharacterButtonClick(int selectedCharacter)

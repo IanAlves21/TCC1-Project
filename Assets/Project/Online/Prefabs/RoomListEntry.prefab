@@ -242,6 +242,8 @@ MonoBehaviour:
   RoomNameText: {fileID: 11471358}
   RoomPlayersText: {fileID: 11488528}
   JoinRoomButton: {fileID: 11484216}
+  buttonTextUpdate: {fileID: 11460062}
+  buttonText: {fileID: 11440274}
 --- !u!1 &134178
 GameObject:
   m_ObjectHideFlags: 0
