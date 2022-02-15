@@ -3061,6 +3061,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388542969}
   m_CullTransparentMesh: 1
+--- !u!1 &1434411874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6145646246678841356, guid: e676f2c031078f240b2bdebccd5c1f45, type: 3}
+  m_PrefabInstance: {fileID: 1218985804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1475282800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5029,6 +5034,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 509355296}
     - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
+      propertyPath: createRoomButton
+      value: 
+      objectReference: {fileID: 1434411874}
+    - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: rowItemListPrefab
       value: 
       objectReference: {fileID: 114706, guid: 5a0cb6930d405434abf1464be3ade96f, type: 3}
@@ -5052,6 +5061,10 @@ PrefabInstance:
       propertyPath: MaxPlayersInputField
       value: 
       objectReference: {fileID: 1106786103}
+    - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
+      propertyPath: characterMenuBackButton
+      value: 
+      objectReference: {fileID: 2073200523}
     - target: {fileID: 2157805952333111486, guid: e0f5036b29eb5fc4eab5a7b962f97d4e, type: 3}
       propertyPath: gameObjectsToActive.Array.size
       value: 5
